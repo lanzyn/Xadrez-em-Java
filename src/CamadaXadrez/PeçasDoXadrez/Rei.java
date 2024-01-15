@@ -13,7 +13,7 @@ public class Rei extends PeçaXadrez {
 
     @Override
     public boolean[][] movimentosPossiveis() {
-        // TODO 
+        // TODO--
         throw new UnsupportedOperationException("Unimplemented method 'movimentosPossiveis'");
     }
 
