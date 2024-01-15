@@ -27,9 +27,12 @@ public class PartidaXadrez {
     }
 
     private void iniciarTabuleiro(){
-        tabuleiro.colocarPeça(new Torre(tabuleiro, Cor.BRANCO), new Posição(2,1));
+        tabuleiro.colocarPeça(new Torre(tabuleiro, Cor.BRANCO), new Posição(0,0));
         tabuleiro.colocarPeça(new Rei(tabuleiro, Cor.PRETO), new Posição(0,4));
         tabuleiro.colocarPeça(new Rei(tabuleiro, Cor.BRANCO), new Posição(7,4));
+        tabuleiro.colocarPeça(new Torre(tabuleiro, Cor.BRANCO), new Posição(0,7));
+        tabuleiro.colocarPeça(new Torre(tabuleiro, Cor.BRANCO), new Posição(7,0));
+        tabuleiro.colocarPeça(new Torre(tabuleiro, Cor.BRANCO), new Posição(7,7));
     }
 }
 
