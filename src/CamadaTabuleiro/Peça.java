@@ -1,7 +1,7 @@
 package CamadaTabuleiro;
 
 public abstract class Peça {
-    protected Posição posição;
+    protected PosiçãoTabuleiro posição;
     private Tabuleiro tabuleiro;
 
     public Peça(Tabuleiro tabuleiro) {
@@ -11,7 +11,7 @@ public abstract class Peça {
 
     public abstract boolean[][] movimentosPossiveis();
 
-    public boolean movimentoPossivel(Posição posição){
+    public boolean movimentoPossivel(PosiçãoTabuleiro posição){
         return movimentosPossiveis()[posição.getLinha()][posição.getColuna()];
     }
 

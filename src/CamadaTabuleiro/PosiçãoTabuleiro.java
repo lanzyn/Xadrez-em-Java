@@ -1,10 +1,10 @@
 package CamadaTabuleiro;    
 
-public class Posição {
+public class PosiçãoTabuleiro {
     private int linha;
     private int coluna;
 
-    public Posição(int linha, int coluna) {
+    public PosiçãoTabuleiro(int linha, int coluna) {
         this.linha = linha;
         this.coluna = coluna;
     }

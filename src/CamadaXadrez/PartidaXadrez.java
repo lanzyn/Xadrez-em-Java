@@ -26,13 +26,17 @@ public class PartidaXadrez {
         return matriz;
     }
 
+    private void colocarNovaPeça(char coluna, int linha, PeçaXadrez peça){
+        tabuleiro.colocarPeça(peça, new PosiçãoXadrez(coluna, linha).paraPosiçãoTabuleiro());
+    }
+
     private void iniciarTabuleiro(){
-        tabuleiro.colocarPeça(new Torre(tabuleiro, Cor.BRANCO), new Posição(0,0));
-        tabuleiro.colocarPeça(new Rei(tabuleiro, Cor.PRETO), new Posição(0,4));
-        tabuleiro.colocarPeça(new Rei(tabuleiro, Cor.BRANCO), new Posição(7,3));
-        tabuleiro.colocarPeça(new Torre(tabuleiro, Cor.BRANCO), new Posição(0,7));
-        tabuleiro.colocarPeça(new Torre(tabuleiro, Cor.BRANCO), new Posição(7,0));
-        tabuleiro.colocarPeça(new Torre(tabuleiro, Cor.BRANCO), new Posição(7,7));
+        colocarNovaPeça('a', 8, new Torre(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('e', 8, new Rei(tabuleiro, Cor.PRETO));
+        colocarNovaPeça('d', 1, new Rei(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('h', 8, new Torre(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('a', 1, new Torre(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('h', 1, new Torre(tabuleiro, Cor.BRANCO));
     }
 }
 
