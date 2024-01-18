@@ -30,7 +30,7 @@ public class PartidaXadrez {
         PosiçãoTabuleiro origemTabuleiro = origem.paraPosiçãoTabuleiro();
         PosiçãoTabuleiro destinoTabuleiro = destino.paraPosiçãoTabuleiro();
         validarPosiçãoOrigem(origemTabuleiro);
-       // validarPosiçãoDestino(origemTabuleiro, destinoTabuleiro);
+        validarPosiçãoDestino(origemTabuleiro, destinoTabuleiro);
         Peça peçaCapturada = fazerMovimento(origemTabuleiro, destinoTabuleiro);
         return (PeçaXadrez)peçaCapturada;
     }
@@ -45,8 +45,12 @@ public class PartidaXadrez {
 
     public void validarPosiçãoOrigem(PosiçãoTabuleiro posição){
         if(!tabuleiro.existePeça(posição)) throw new ExceçãoXadrez("Não existe peça na posição de origem");
-        //if(jogadorAtual != ((PeçaXadrez)tabuleiro.peça(posição)).getCor()) throw new ExceçãoXadrez("A peça escolhida não é sua");
         if(!tabuleiro.peça(posição).existeMovimentoPossivel()) throw new ExceçãoXadrez("Não há movimentos possíveis para a peça escolhida");
+        //if(jogadorAtual != ((PeçaXadrez)tabuleiro.peça(posição)).getCor()) throw new ExceçãoXadrez("A peça escolhida não é sua");
+    }
+
+    public void validarPosiçãoDestino(PosiçãoTabuleiro origem, PosiçãoTabuleiro destino){
+        if(!tabuleiro.peça(origem).movimentoPossivel(destino)) throw new ExceçãoXadrez("Movimento invalido! A peça escolhida não pode se mover para a posição de destino");
     }
 
     private void colocarNovaPeça(char coluna, int linha, PeçaXadrez peça){
