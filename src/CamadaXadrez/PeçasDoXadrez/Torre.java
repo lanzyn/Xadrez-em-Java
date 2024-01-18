@@ -12,8 +12,8 @@ public class Torre extends PeçaXadrez{
 
     @Override
     public boolean[][] movimentosPossiveis() {
-        // TODO
-        throw new UnsupportedOperationException("Unimplemented method 'movimentosPossiveis'");
+        boolean[][] matriz = new boolean[getTabuleiro().getLinhas()][getTabuleiro().getColunas()];
+        return matriz;
     }
 
     @Override
