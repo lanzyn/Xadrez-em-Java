@@ -29,9 +29,11 @@ public class Tabuleiro {
     }
 
     public Peça removerPeça(PosiçãoTabuleiro posição){
-        if(existePeça(posição) == false) throw new ExceçãoTabuleiro("Não há peça na posição " + posição);
+        if(!existePosição(posição)) throw new ExceçãoTabuleiro("Posição não existe no tabuleiro");
+        if(!existePeça(posição)) return null;
         Peça peçaRemovida = peça(posição);
         peças[posição.getLinha()][posição.getColuna()] = null;
+        peçaRemovida.posição = null;
         return peçaRemovida;
     }
 
