@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import CamadaTabuleiro.Peça;
+import CamadaTabuleiro.PosiçãoTabuleiro;
 import CamadaXadrez.Cor;
 import CamadaXadrez.PeçaXadrez;
 import CamadaXadrez.PosiçãoXadrez;
@@ -30,14 +31,17 @@ public class UI {
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
-    public static void limparTela(){
+    public static void limparTela() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
-    public static void imprimirPeça(PeçaXadrez peça) {
+    public static void imprimirPeça(PeçaXadrez peça, boolean fundo) {
+        if(fundo){
+            System.out.print(ANSI_BLUE_BACKGROUND);
+        }
         if(peça == null){
-            System.out.print("-");
+            System.out.print("-" + ANSI_RESET);
         }else{
             if(peça.getCor() == Cor.BRANCO){
                 System.out.print(ANSI_WHITE + peça + ANSI_RESET);
@@ -52,7 +56,18 @@ public class UI {
         for(int i = 0;i<peças.length;i++){
             System.out.print(8 - i + " " + ANSI_RESET);
             for(int j = 0;j<peças.length;j++){
-                imprimirPeça(peças[i][j]);
+                imprimirPeça(peças[i][j], false);
+            }
+            System.out.println(ANSI_RESET);
+        }
+        System.out.println("  a b c d e f g h"  + ANSI_RESET);
+    }
+
+    public static void imprimirTabuleiro(PeçaXadrez[][] peças, boolean[][] movimentosPossiveis){
+        for(int i = 0;i<peças.length;i++){
+            System.out.print(8 - i + " " + ANSI_RESET);
+            for(int j = 0;j<peças.length;j++){
+                imprimirPeça(peças[i][j], movimentosPossiveis[i][j]);
             }
             System.out.println(ANSI_RESET);
         }
