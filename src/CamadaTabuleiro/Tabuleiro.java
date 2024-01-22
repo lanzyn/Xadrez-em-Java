@@ -38,7 +38,7 @@ public class Tabuleiro {
     }
 
     public boolean existePosição(PosiçãoTabuleiro posição){
-        if(posição.getLinha() < 0 || posição.getLinha() > linhas || posição.getColuna() < 0 || posição.getColuna() > colunas){
+        if(posição.getLinha() < 0 || posição.getLinha() >= linhas || posição.getColuna() < 0 || posição.getColuna() >= colunas){
             return false;
         }
         else return true;
