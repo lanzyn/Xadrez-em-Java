@@ -1,11 +1,14 @@
 package CamadaPrograma;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import CamadaTabuleiro.Peça;
 import CamadaTabuleiro.PosiçãoTabuleiro;
 import CamadaXadrez.Cor;
+import CamadaXadrez.PartidaXadrez;
 import CamadaXadrez.PeçaXadrez;
 import CamadaXadrez.PosiçãoXadrez;
 
@@ -52,6 +55,43 @@ public class UI {
         System.out.print(" ");
     }
 
+    public static void imprimirPatida(PartidaXadrez partida, PosiçãoXadrez origem){
+        System.out.println(ANSI_RESET);
+        imprimirTabuleiro(partida.getPecas(), partida.movimentosPossiveis(origem));
+        System.out.println();
+        ArrayList<Peça> peçasCapturadas = partida.getPeçasCapturadas();
+        ArrayList<PeçaXadrez> peçaCap = new ArrayList<>();
+        for (Peça peça : peçasCapturadas) {
+            peçaCap.add((PeçaXadrez) peça);
+        }
+        imprimirPeçasCapturadas(peçaCap);
+        if (partida.getJogadorAtual() == Cor.BRANCO){
+            System.out.println(ANSI_WHITE);
+        } else if (partida.getJogadorAtual() == Cor.PRETO) {
+            System.out.println(ANSI_BLACK);
+        }
+        System.out.println("Turno: " + partida.getTurno());
+        System.out.println("Aguardando jogador: " + partida.getJogadorAtual());
+    }
+    public static void imprimirPatida(PartidaXadrez partida){
+        System.out.println(ANSI_RESET);
+        imprimirTabuleiro(partida.getPecas());
+        System.out.println();
+        ArrayList<Peça> peçasCapturadas = partida.getPeçasCapturadas();
+        ArrayList<PeçaXadrez> peçaCap = new ArrayList<>();
+        for (Peça peça : peçasCapturadas) {
+            peçaCap.add((PeçaXadrez) peça);
+        }
+        imprimirPeçasCapturadas(peçaCap);
+        if (partida.getJogadorAtual() == Cor.BRANCO){
+            System.out.println(ANSI_WHITE);
+        } else if (partida.getJogadorAtual() == Cor.PRETO) {
+            System.out.println(ANSI_BLACK);
+        }
+        System.out.println("Turno: " + partida.getTurno());
+        System.out.println("Aguardando jogador: " + partida.getJogadorAtual());
+    }
+
     public static void imprimirTabuleiro(PeçaXadrez[][] peças){
         for(int i = 0;i<peças.length;i++){
             System.out.print(8 - i + " " + ANSI_RESET);
@@ -72,6 +112,27 @@ public class UI {
             System.out.println(ANSI_RESET);
         }
         System.out.println("  a b c d e f g h"  + ANSI_RESET);
+    }
+
+    public static void imprimirPeçasCapturadas(ArrayList<PeçaXadrez> capturadas){
+        ArrayList<Peça> brancas = new ArrayList<>();
+        ArrayList<Peça> pretas = new ArrayList<>();
+        for(int i = 0; i< capturadas.size(); i++){
+            if(capturadas.get(i).getCor() == Cor.BRANCO){
+                brancas.add(capturadas.get(i));
+            }else{
+                pretas.add(capturadas.get(i));
+            }
+        }
+        System.out.println("Peças capturadas: ");
+        System.out.print("Brancas: ");
+        System.out.print(ANSI_WHITE);
+        System.out.println(Arrays.toString(brancas.toArray()));
+        System.out.print(ANSI_RESET);
+        System.out.print("Pretas: ");
+        System.out.print(ANSI_BLACK);
+        System.out.println(Arrays.toString(pretas.toArray()));
+        System.out.print(ANSI_RESET);
     }
 
     public static PosiçãoXadrez lerPosiçãoXadrez(Scanner sc){
