@@ -55,6 +55,11 @@ public class PartidaXadrez {
         validarPosiçãoOrigem(origemTabuleiro);
         validarPosiçãoDestino(origemTabuleiro, destinoTabuleiro);
         Peça peçaCapturada = fazerMovimento(origemTabuleiro, destinoTabuleiro);
+        if(testeXeque(jogadorAtual)){
+            desfazerMovimento(origemTabuleiro, destinoTabuleiro, peçaCapturada);
+            throw new ExceçãoXadrez("Você não pode se colocar em xeque");
+        }
+        xeque = (testeXeque(oponente(jogadorAtual))) ? true : false;
         return (PeçaXadrez)peçaCapturada;
     }
 
@@ -71,6 +76,16 @@ public class PartidaXadrez {
         return peçaCapturada;
     }
 
+    public void desfazerMovimento(PosiçãoTabuleiro origem, PosiçãoTabuleiro destino, Peça peçaCapturada){
+        Peça peçaMovida = tabuleiro.removerPeça(destino);
+        tabuleiro.colocarPeça(peçaMovida, origem);
+        if(peçaCapturada != null){
+            tabuleiro.colocarPeça(peçaCapturada, destino);
+            peçasCapturadas.remove(peçaCapturada);
+            peçasNoTabuleiro.add(peçaCapturada);
+        }
+    }
+
     public void validarPosiçãoOrigem(PosiçãoTabuleiro posição){
         if(!tabuleiro.existePeça(posição)) throw new ExceçãoXadrez("Não existe peça na posição de origem");
         if(!tabuleiro.peça(posição).existeMovimentoPossivel()) throw new ExceçãoXadrez("Não há movimentos possíveis para a peça escolhida");
@@ -84,6 +99,32 @@ public class PartidaXadrez {
     public void próximoTurno(){
         turno++;
         jogadorAtual = (jogadorAtual == Cor.BRANCO) ? Cor.PRETO : Cor.BRANCO;
+    }
+    
+    private Cor oponente(Cor cor){
+        return (cor == Cor.BRANCO) ? Cor.PRETO : Cor.BRANCO;
+    }
+
+    private PeçaXadrez rei(Cor cor){
+        for(Peça peça : peçasNoTabuleiro){
+            if(((PeçaXadrez)peça).getCor() == oponente(cor) && peça instanceof Rei){
+                return (PeçaXadrez)peça;
+            }
+        }
+        throw new IllegalStateException("Não existe o rei da cor " + cor + " no tabuleiro");
+    }
+    
+    private boolean testeXeque(Cor cor){
+        PosiçãoTabuleiro posiçãoRei = rei(cor).getPosiçãoXadrez().paraPosiçãoTabuleiro();
+        for(Peça peça : peçasNoTabuleiro){
+            if(((PeçaXadrez)peça).getCor() == cor){
+                boolean[][] matriz = peça.movimentosPossiveis();
+                if(matriz[posiçãoRei.getLinha()][posiçãoRei.getColuna()]){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void colocarNovaPeça(char coluna, int linha, PeçaXadrez peça){
@@ -110,6 +151,14 @@ public class PartidaXadrez {
 
     public Tabuleiro getTabuleiro() {
         return tabuleiro;
+    }
+
+    public boolean getXeque() {
+        return xeque;
+    }
+
+    public boolean getXequeMate() {
+        return xequeMate;
     }
     
 }

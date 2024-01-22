@@ -21,6 +21,10 @@ public abstract class PeçaXadrez extends Peça{
         contadorMovimentos--;
     }
 
+    public PosiçãoXadrez getPosiçãoXadrez(){
+        return PosiçãoXadrez.paraPosiçãoXadrez(super.posição);
+    }
+
     protected boolean existePeçaOponente(PosiçãoTabuleiro posição){
         PeçaXadrez p = (PeçaXadrez)getTabuleiro().peça(posição);
         return p != null && p.getCor() != cor;

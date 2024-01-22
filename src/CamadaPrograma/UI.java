@@ -72,6 +72,9 @@ public class UI {
         }
         System.out.println("Turno: " + partida.getTurno());
         System.out.println("Aguardando jogador: " + partida.getJogadorAtual());
+        if(partida.getXeque()){
+            System.out.println("XEQUE!");
+        }
     }
     public static void imprimirPatida(PartidaXadrez partida){
         System.out.println(ANSI_RESET);
@@ -90,6 +93,9 @@ public class UI {
         }
         System.out.println("Turno: " + partida.getTurno());
         System.out.println("Aguardando jogador: " + partida.getJogadorAtual());
+        if(partida.getXeque()){
+            System.out.println("XEQUE!");
+        }
     }
 
     public static void imprimirTabuleiro(PeçaXadrez[][] peças){

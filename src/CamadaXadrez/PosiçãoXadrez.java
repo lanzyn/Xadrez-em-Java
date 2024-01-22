@@ -23,8 +23,8 @@ public class PosiçãoXadrez {
         return new PosiçãoTabuleiro(8 - linha, coluna - 'a');
     }
 
-    protected PosiçãoXadrez paraPosiçãoXadrez(PosiçãoTabuleiro posição){
-        return new PosiçãoXadrez((char)('a' - posição.getColuna()), (posição.getLinha() -8) *(-1 ));
+    protected static PosiçãoXadrez paraPosiçãoXadrez(PosiçãoTabuleiro posição){
+        return new PosiçãoXadrez((char)('a' + posição.getColuna()), (posição.getLinha() -8) *(-1 ));
     }
     
     @Override
