@@ -15,7 +15,7 @@ public class Programa {
         Scanner sc = new Scanner(System.in);
 
 
-       while(true){
+       while(partida.getXequeMate() == false){
         try{
                 UI.limparTela();
                 UI.imprimirPatida(partida);
@@ -42,5 +42,8 @@ public class Programa {
             sc.nextLine();
         }
     }
+    UI.limparTela();
+    UI.imprimirPatida(partida);
 }
+
 }
