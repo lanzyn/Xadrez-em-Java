@@ -6,7 +6,7 @@ import CamadaTabuleiro.Tabuleiro;
 
 public abstract class PeçaXadrez extends Peça{
     private Cor cor;
-    private int contadorMovimentos;
+    protected int contadorMovimentos;
     
     public PeçaXadrez(Tabuleiro tabuleiro, Cor cor) {
         super(tabuleiro);

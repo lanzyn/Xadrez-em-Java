@@ -82,7 +82,8 @@ public class PartidaXadrez {
     }
 
     public void desfazerMovimento(PosiçãoTabuleiro origem, PosiçãoTabuleiro destino, Peça peçaCapturada){
-        Peça peçaMovida = tabuleiro.removerPeça(destino);
+        PeçaXadrez peçaMovida = (PeçaXadrez)tabuleiro.removerPeça(destino);
+        peçaMovida.decrementarContadorMovimentos();
         tabuleiro.colocarPeça(peçaMovida, origem);
         if(peçaCapturada != null){
             tabuleiro.colocarPeça(peçaCapturada, destino);
