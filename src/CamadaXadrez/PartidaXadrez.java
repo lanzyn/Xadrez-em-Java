@@ -175,7 +175,11 @@ public class PartidaXadrez {
         colocarNovaPeça('h', 7, new Peão(tabuleiro, Cor.PRETO));
         colocarNovaPeça('c', 8, new Bispo(tabuleiro, Cor.PRETO));
         colocarNovaPeça('f', 8, new Bispo(tabuleiro, Cor.PRETO));
+        colocarNovaPeça('b', 8, new Cavalo(tabuleiro, Cor.PRETO));
+        colocarNovaPeça('g', 8, new Cavalo(tabuleiro, Cor.PRETO));
         
+        colocarNovaPeça('b', 1, new Cavalo(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('g', 1, new Cavalo(tabuleiro, Cor.BRANCO));
         colocarNovaPeça('c', 1, new Bispo(tabuleiro, Cor.BRANCO));
         colocarNovaPeça('f', 1, new Bispo(tabuleiro, Cor.BRANCO));
         colocarNovaPeça('d', 1, new Rei(tabuleiro, Cor.BRANCO));
