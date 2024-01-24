@@ -2,7 +2,6 @@ package CamadaXadrez;
 
 import CamadaXadrez.PeçasDoXadrez.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import CamadaTabuleiro.*;;
@@ -21,7 +20,7 @@ public class PartidaXadrez {
     public PartidaXadrez() {
         tabuleiro = new Tabuleiro(8,8);
         turno = 1;
-        jogadorAtual = Cor.PRETO;
+        jogadorAtual = Cor.BRANCO;
         iniciarTabuleiro();
     }
 
@@ -163,12 +162,29 @@ public class PartidaXadrez {
     }
 
     private void iniciarTabuleiro(){
-        colocarNovaPeça('b', 8, new Torre(tabuleiro, Cor.BRANCO));
-        colocarNovaPeça('a', 8, new Rei(tabuleiro, Cor.BRANCO));
-        colocarNovaPeça('d', 1, new Rei(tabuleiro, Cor.PRETO));
-       // colocarNovaPeça('h', 8, new Torre(tabuleiro, Cor.BRANCO));
-        colocarNovaPeça('b', 1, new Torre(tabuleiro, Cor.PRETO));
-        colocarNovaPeça('h', 7, new Torre(tabuleiro, Cor.PRETO));
+        colocarNovaPeça('a', 8, new Torre(tabuleiro, Cor.PRETO));
+        colocarNovaPeça('h', 8, new Torre(tabuleiro, Cor.PRETO));
+        colocarNovaPeça('e', 8, new Rei(tabuleiro, Cor.PRETO));
+        colocarNovaPeça('a', 7, new Peão(tabuleiro, Cor.PRETO));
+        colocarNovaPeça('b', 7, new Peão(tabuleiro, Cor.PRETO));
+        colocarNovaPeça('c', 7, new Peão(tabuleiro, Cor.PRETO));
+        colocarNovaPeça('d', 7, new Peão(tabuleiro, Cor.PRETO));
+        colocarNovaPeça('e', 7, new Peão(tabuleiro, Cor.PRETO));
+        colocarNovaPeça('f', 7, new Peão(tabuleiro, Cor.PRETO));
+        colocarNovaPeça('g', 7, new Peão(tabuleiro, Cor.PRETO));
+        colocarNovaPeça('h', 7, new Peão(tabuleiro, Cor.PRETO));
+        
+        colocarNovaPeça('d', 1, new Rei(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('b', 1, new Torre(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('h', 1, new Torre(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('a', 2, new Peão(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('b', 2, new Peão(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('c', 2, new Peão(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('d', 2, new Peão(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('e', 2, new Peão(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('f', 2, new Peão(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('g', 2, new Peão(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('h', 2, new Peão(tabuleiro, Cor.BRANCO));
     }
 
     public int getTurno() {
