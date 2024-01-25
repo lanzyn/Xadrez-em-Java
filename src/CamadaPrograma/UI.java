@@ -91,7 +91,7 @@ public class UI {
             System.out.println(ANSI_BLACK);
         }
         System.out.println("Turno: " + partida.getTurno());
-        if (!partida.getXeque()) {
+        if (!partida.getXequeMate()) {
             System.out.println("Aguardando jogador: " + partida.getJogadorAtual());
             if (partida.getXeque()) {
                 System.out.println("XEQUE!");
