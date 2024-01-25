@@ -11,18 +11,18 @@ public abstract class Peça {
 
     public abstract boolean[][] movimentosPossiveis();
 
-    public boolean movimentoPossivel(PosiçãoTabuleiro posição){
-        if(!tabuleiro.existePosição(posição)){
+    public boolean movimentoPossivel(PosiçãoTabuleiro posição) {
+        if (!tabuleiro.existePosição(posição)) {
             throw new ExceçãoTabuleiro("Posição fora do tabuleiro");
         }
         return movimentosPossiveis()[posição.getLinha()][posição.getColuna()];
     }
 
-    public boolean existeMovimentoPossivel(){
+    public boolean existeMovimentoPossivel() {
         boolean[][] movimentos = movimentosPossiveis();
-        for(int i = 0; i < movimentos.length; i++){
-            for(int j = 0; j < movimentos.length; j++){
-                if(movimentos[i][j]){
+        for (int i = 0; i < movimentos.length; i++) {
+            for (int j = 0; j < movimentos.length; j++) {
+                if (movimentos[i][j]) {
                     return true;
                 }
             }
@@ -39,5 +39,4 @@ public abstract class Peça {
         return tabuleiro;
     }
 
-    
 }

@@ -1,4 +1,4 @@
-package CamadaTabuleiro;    
+package CamadaTabuleiro;
 
 public class PosiçãoTabuleiro {
     private int linha;
@@ -31,7 +31,7 @@ public class PosiçãoTabuleiro {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return linha + ", " + coluna;
     }
 }
