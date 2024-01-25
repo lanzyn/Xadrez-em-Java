@@ -7,20 +7,20 @@ import CamadaXadrez.PeçaXadrez;
 
 public class Bispo extends PeçaXadrez {
 
-    public Bispo(Tabuleiro tabuleiro, Cor cor) {
-        super(tabuleiro, cor);
-    }
+	public Bispo(Tabuleiro tabuleiro, Cor cor) {
+		super(tabuleiro, cor);
+	}
 
-    @Override
-    public boolean[][] movimentosPossiveis() {
-        boolean[][] matriz = new boolean[getTabuleiro().getLinhas()][getTabuleiro().getColunas()];
-        PosiçãoTabuleiro p = new PosiçãoTabuleiro(0, 0);
+	@Override
+	public boolean[][] movimentosPossiveis() {
+		boolean[][] matriz = new boolean[getTabuleiro().getLinhas()][getTabuleiro().getColunas()];
+		PosiçãoTabuleiro p = new PosiçãoTabuleiro(0, 0);
 
-        // Noroeste
+		// Noroeste
 		p.definirValores(posição.getLinha() - 1, posição.getColuna() - 1);
 		while (getTabuleiro().existePosição(p) && !getTabuleiro().existePeça(p)) {
 			matriz[p.getLinha()][p.getColuna()] = true;
-            p.definirValores(p.getLinha() - 1, p.getColuna() - 1);
+			p.definirValores(p.getLinha() - 1, p.getColuna() - 1);
 		}
 		if (getTabuleiro().existePosição(p) && existePeçaOponente(p)) {
 			matriz[p.getLinha()][p.getColuna()] = true;
@@ -30,7 +30,7 @@ public class Bispo extends PeçaXadrez {
 		p.definirValores(posição.getLinha() - 1, posição.getColuna() + 1);
 		while (getTabuleiro().existePosição(p) && !getTabuleiro().existePeça(p)) {
 			matriz[p.getLinha()][p.getColuna()] = true;
-            p.definirValores(p.getLinha() - 1, p.getColuna() + 1);
+			p.definirValores(p.getLinha() - 1, p.getColuna() + 1);
 		}
 		if (getTabuleiro().existePosição(p) && existePeçaOponente(p)) {
 			matriz[p.getLinha()][p.getColuna()] = true;
@@ -40,7 +40,7 @@ public class Bispo extends PeçaXadrez {
 		p.definirValores(posição.getLinha() + 1, posição.getColuna() + 1);
 		while (getTabuleiro().existePosição(p) && !getTabuleiro().existePeça(p)) {
 			matriz[p.getLinha()][p.getColuna()] = true;
-            p.definirValores(p.getLinha() + 1, p.getColuna() + 1);
+			p.definirValores(p.getLinha() + 1, p.getColuna() + 1);
 		}
 		if (getTabuleiro().existePosição(p) && existePeçaOponente(p)) {
 			matriz[p.getLinha()][p.getColuna()] = true;
@@ -50,20 +50,18 @@ public class Bispo extends PeçaXadrez {
 		p.definirValores(posição.getLinha() + 1, posição.getColuna() - 1);
 		while (getTabuleiro().existePosição(p) && !getTabuleiro().existePeça(p)) {
 			matriz[p.getLinha()][p.getColuna()] = true;
-            p.definirValores(p.getLinha() + 1, p.getColuna() - 1);
+			p.definirValores(p.getLinha() + 1, p.getColuna() - 1);
 		}
 		if (getTabuleiro().existePosição(p) && existePeçaOponente(p)) {
 			matriz[p.getLinha()][p.getColuna()] = true;
 		}
 
-        return matriz;
-    }
+		return matriz;
+	}
 
-    @Override
-    public String toString() {
-        return "B";
-    }
+	@Override
+	public String toString() {
+		return "B";
+	}
 
-    
 }
-

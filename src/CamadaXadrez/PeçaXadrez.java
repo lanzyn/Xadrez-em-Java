@@ -4,29 +4,29 @@ import CamadaTabuleiro.Peça;
 import CamadaTabuleiro.PosiçãoTabuleiro;
 import CamadaTabuleiro.Tabuleiro;
 
-public abstract class PeçaXadrez extends Peça{
+public abstract class PeçaXadrez extends Peça {
     private Cor cor;
     protected int contadorMovimentos;
-    
+
     public PeçaXadrez(Tabuleiro tabuleiro, Cor cor) {
         super(tabuleiro);
         this.cor = cor;
     }
 
-    protected void incrementarContadorMovimentos(){
+    protected void incrementarContadorMovimentos() {
         contadorMovimentos++;
     }
 
-    protected void decrementarContadorMovimentos(){
+    protected void decrementarContadorMovimentos() {
         contadorMovimentos--;
     }
 
-    public PosiçãoXadrez getPosiçãoXadrez(){
+    public PosiçãoXadrez getPosiçãoXadrez() {
         return PosiçãoXadrez.paraPosiçãoXadrez(super.posição);
     }
 
-    protected boolean existePeçaOponente(PosiçãoTabuleiro posição){
-        PeçaXadrez p = (PeçaXadrez)getTabuleiro().peça(posição);
+    protected boolean existePeçaOponente(PosiçãoTabuleiro posição) {
+        PeçaXadrez p = (PeçaXadrez) getTabuleiro().peça(posição);
         return p != null && p.getCor() != cor;
     }
 
@@ -37,5 +37,5 @@ public abstract class PeçaXadrez extends Peça{
     public int getContadorMovimentos() {
         return contadorMovimentos;
     }
-    
+
 }

@@ -9,12 +9,12 @@ public class Cavalo extends PeçaXadrez {
 
     public Cavalo(Tabuleiro tabuleiro, Cor cor) {
         super(tabuleiro, cor);
-        
+
     }
 
-    public boolean podeMover(PosiçãoTabuleiro posição){
-        PeçaXadrez p = (PeçaXadrez)getTabuleiro().peça(posição);
-        return p == null ||  p.getCor() != getCor();
+    public boolean podeMover(PosiçãoTabuleiro posição) {
+        PeçaXadrez p = (PeçaXadrez) getTabuleiro().peça(posição);
+        return p == null || p.getCor() != getCor();
     }
 
     @Override
@@ -24,7 +24,7 @@ public class Cavalo extends PeçaXadrez {
         PosiçãoTabuleiro p = new PosiçãoTabuleiro(0, 0);
 
         p.definirValores(posição.getLinha() - 1, posição.getColuna() + 2);
-        if(getTabuleiro().existePosição(p) && podeMover(p)){
+        if (getTabuleiro().existePosição(p) && podeMover(p)) {
             matriz[p.getLinha()][p.getColuna()] = true;
         }
 
@@ -33,33 +33,33 @@ public class Cavalo extends PeçaXadrez {
             matriz[p.getLinha()][p.getColuna()] = true;
         }
 
-        p.definirValores(posição.getLinha() + 1, posição.getColuna() - 2); 
-        if(getTabuleiro().existePosição(p) && podeMover(p)){
+        p.definirValores(posição.getLinha() + 1, posição.getColuna() - 2);
+        if (getTabuleiro().existePosição(p) && podeMover(p)) {
             matriz[p.getLinha()][p.getColuna()] = true;
         }
 
         p.definirValores(posição.getLinha() + 1, posição.getColuna() + 2);
-        if(getTabuleiro().existePosição(p) && podeMover(p)){
+        if (getTabuleiro().existePosição(p) && podeMover(p)) {
             matriz[p.getLinha()][p.getColuna()] = true;
         }
 
         p.definirValores(posição.getLinha() - 2, posição.getColuna() - 1);
-        if(getTabuleiro().existePosição(p) && podeMover(p)){
+        if (getTabuleiro().existePosição(p) && podeMover(p)) {
             matriz[p.getLinha()][p.getColuna()] = true;
         }
 
         p.definirValores(posição.getLinha() - 2, posição.getColuna() + 1);
-        if(getTabuleiro().existePosição(p) && podeMover(p)){
+        if (getTabuleiro().existePosição(p) && podeMover(p)) {
             matriz[p.getLinha()][p.getColuna()] = true;
         }
 
         p.definirValores(posição.getLinha() + 2, posição.getColuna() - 1);
-        if(getTabuleiro().existePosição(p) && podeMover(p)){
+        if (getTabuleiro().existePosição(p) && podeMover(p)) {
             matriz[p.getLinha()][p.getColuna()] = true;
         }
 
         p.definirValores(posição.getLinha() + 2, posição.getColuna() + 1);
-        if(getTabuleiro().existePosição(p) && podeMover(p)){
+        if (getTabuleiro().existePosição(p) && podeMover(p)) {
             matriz[p.getLinha()][p.getColuna()] = true;
         }
 
@@ -70,6 +70,5 @@ public class Cavalo extends PeçaXadrez {
     public String toString() {
         return "C";
     }
-    
-    
+
 }

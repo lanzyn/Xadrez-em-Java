@@ -44,8 +44,7 @@ public class Programa {
             } catch (InputMismatchException e) {
                 System.out.println(e.getMessage());
                 sc.nextLine();
-            }
-            catch(InvalidParameterException e){
+            } catch (InvalidParameterException e) {
                 System.out.println(e.getMessage());
                 sc.nextLine();
             }

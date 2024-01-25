@@ -6,7 +6,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import CamadaTabuleiro.Peça;
-import CamadaTabuleiro.PosiçãoTabuleiro;
 import CamadaXadrez.Cor;
 import CamadaXadrez.PartidaXadrez;
 import CamadaXadrez.PeçaXadrez;
