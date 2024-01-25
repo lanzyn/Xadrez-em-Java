@@ -1,18 +1,29 @@
-## Getting Started
+# ♜ Projeto de Xadrez em Java ♖
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## ♞ Descrição
+Este é um projeto de um jogo de xadrez implementado em Java. O jogo suporta dois jogadores e segue as regras padrão do xadrez.
 
-## Folder Structure
+## ♝ Requisitos
+- Java 11 ou superior
+- IDE de sua escolha (por exemplo, IntelliJ IDEA, Eclipse)
 
-The workspace contains two folders by default, where:
+## ♛ Como executar
+1. Clone este repositório para a sua máquina local.
+2. Abra o projeto na sua IDE.
+3. Execute a classe principal para iniciar o jogo.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## ♚ Estrutura do projeto
+O projeto segue a estrutura padrão de um projeto Java:
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+- `src/main/java`: Contém o código fonte do projeto.
+- `src/test/java`: Contém os testes unitários.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## ♟ Contribuição
+Sinta-se à vontade para contribuir com este projeto. Todas as contribuições são bem-vindas, desde que sigam as diretrizes de contribuição.
 
-## Dependency Management
+## ♙ Licença
+Este projeto está licenciado sob a licença MIT.
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## ♘ Contato
+Se você tiver alguma dúvida ou sugestão, por favor, entre em contato.
+
