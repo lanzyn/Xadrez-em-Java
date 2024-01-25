@@ -1,5 +1,6 @@
 package CamadaPrograma;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -14,9 +15,8 @@ public class Programa {
         PartidaXadrez partida = new PartidaXadrez();
         Scanner sc = new Scanner(System.in);
 
-
-       while(partida.getXequeMate() == false){
-        try{
+        while (partida.getXequeMate() == false) {
+            try {
                 UI.limparTela();
                 UI.imprimirPatida(partida);
                 System.out.println();
@@ -26,24 +26,34 @@ public class Programa {
                 UI.limparTela();
                 UI.imprimirPatida(partida, origem);
 
-
-                System.out.println();  
+                System.out.println();
                 System.out.print("Destino: ");
                 PosiçãoXadrez destino = UI.lerPosiçãoXadrez(sc);
-                partida.executarMovimento(origem, destino); 
-                
+                partida.executarMovimento(origem, destino);
+
+                if (partida.getPromovido() != null) {
+                    System.out.print("Digite a peça para promoção (B/C/R/Q): ");
+                    String tipo = sc.nextLine();
+                    if (!tipo.equals("B") && !tipo.equals("C") && !tipo.equals("R") && !tipo.equals("Q")) {
+                        throw new InvalidParameterException("Tipo inválido para promoção");
+                    }
+                    partida.substituirPeçaPromovida(tipo);
+                }
+
+            } catch (ExceçãoXadrez e) {
+                System.out.println(e.getMessage());
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println(e.getMessage());
+                sc.nextLine();
             }
-        catch(ExceçãoXadrez e){
-            System.out.println(e.getMessage());
-            sc.nextLine();
+            catch(InvalidParameterException e){
+                System.out.println(e.getMessage());
+                sc.nextLine();
+            }
         }
-        catch(InputMismatchException e){
-            System.out.println(e.getMessage());
-            sc.nextLine();
-        }
+        UI.limparTela();
+        UI.imprimirPatida(partida);
     }
-    UI.limparTela();
-    UI.imprimirPatida(partida);
-}
 
 }

@@ -2,6 +2,7 @@ package CamadaXadrez;
 
 import CamadaXadrez.PeçasDoXadrez.*;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class PartidaXadrez {
     private boolean xeque;
     private boolean xequeMate;
     private PeçaXadrez enPassantVulnerável;
+    private PeçaXadrez promovido;
 
     private ArrayList<Peça> peçasNoTabuleiro = new ArrayList<Peça>();
     private ArrayList<Peça> peçasCapturadas = new ArrayList<Peça>();
@@ -36,6 +38,23 @@ public class PartidaXadrez {
         return matriz;
     }
 
+    public PeçaXadrez substituirPeçaPromovida(String tipo){
+        if(promovido == null){
+            throw new IllegalStateException("Não há peça para ser promovida");
+        }
+        PosiçãoTabuleiro pos = promovido.getPosiçãoXadrez().paraPosiçãoTabuleiro();
+        Peça p = tabuleiro.removerPeça(pos);
+        peçasNoTabuleiro.remove(p);
+        PeçaXadrez novaPeça;
+        if(tipo.equals("B")) novaPeça = new Bispo(tabuleiro, promovido.getCor());
+        else if(tipo.equals("C")) novaPeça = new Cavalo(tabuleiro, promovido.getCor());
+        else if(tipo.equals("Q")) novaPeça = new Rainha(tabuleiro, promovido.getCor());
+        else novaPeça =  new Torre(tabuleiro, promovido.getCor());
+        tabuleiro.colocarPeça(novaPeça, pos);
+        peçasNoTabuleiro.add(novaPeça);
+        return novaPeça;
+    }
+
     public boolean[][] movimentosPossiveis(PosiçãoXadrez origemPosição){
         PosiçãoTabuleiro posição = origemPosição.paraPosiçãoTabuleiro();
         validarPosiçãoOrigem(posição);
@@ -53,6 +72,14 @@ public class PartidaXadrez {
             throw new ExceçãoXadrez("Você não pode se colocar em xeque");
         }
         PeçaXadrez peçaMovida = (PeçaXadrez)tabuleiro.peça(destinoTabuleiro);
+        //Promoção
+        promovido = null;
+        if(peçaMovida instanceof Peão){
+            if((peçaMovida.getCor() == Cor.BRANCO && destinoTabuleiro.getLinha() == 0) || (peçaMovida.getCor() == Cor.PRETO && destinoTabuleiro.getLinha() == 7)){
+                promovido = (PeçaXadrez)tabuleiro.peça(destinoTabuleiro);
+                promovido = substituirPeçaPromovida("Q");
+            }
+        }
         xeque = (testeXeque(oponente(jogadorAtual))) ? true : false;
         if(testeXequeMate(oponente(jogadorAtual))){
             xequeMate = true;
@@ -60,6 +87,7 @@ public class PartidaXadrez {
         else{
             próximoTurno();
         }
+        //En passant
         if(peçaMovida instanceof Peão && (destinoTabuleiro.getLinha() == origemTabuleiro.getLinha() - 2 || destinoTabuleiro.getLinha() == origemTabuleiro.getLinha() + 2)){
             enPassantVulnerável = peçaMovida;
         }
@@ -260,7 +288,7 @@ public class PartidaXadrez {
         colocarNovaPeça('h', 8, new Torre(tabuleiro, Cor.PRETO));
         colocarNovaPeça('d', 8, new Rei(tabuleiro, Cor.PRETO, this));
         colocarNovaPeça('a', 7, new Peão(tabuleiro, Cor.PRETO, this));
-        colocarNovaPeça('b', 7, new Peão(tabuleiro, Cor.PRETO, this));
+       // colocarNovaPeça('b', 7, new Peão(tabuleiro, Cor.PRETO, this));
         colocarNovaPeça('c', 7, new Peão(tabuleiro, Cor.PRETO, this));
         colocarNovaPeça('d', 7, new Peão(tabuleiro, Cor.PRETO, this));
         colocarNovaPeça('e', 7, new Peão(tabuleiro, Cor.PRETO, this));
@@ -270,9 +298,9 @@ public class PartidaXadrez {
         colocarNovaPeça('c', 8, new Bispo(tabuleiro, Cor.PRETO));
         colocarNovaPeça('f', 8, new Bispo(tabuleiro, Cor.PRETO));
         colocarNovaPeça('e', 8, new Rainha(tabuleiro, Cor.PRETO));
-        colocarNovaPeça('b', 8, new Cavalo(tabuleiro, Cor.PRETO));
+       // colocarNovaPeça('b', 8, new Cavalo(tabuleiro, Cor.PRETO));
         colocarNovaPeça('g', 8, new Cavalo(tabuleiro, Cor.PRETO));
-//
+
         colocarNovaPeça('d', 1, new Rainha(tabuleiro, Cor.BRANCO));
         colocarNovaPeça('b', 1, new Cavalo(tabuleiro, Cor.BRANCO));
         colocarNovaPeça('g', 1, new Cavalo(tabuleiro, Cor.BRANCO));  
@@ -282,7 +310,7 @@ public class PartidaXadrez {
         colocarNovaPeça('h', 1, new Torre(tabuleiro, Cor.BRANCO));
         colocarNovaPeça('e', 1, new Rei(tabuleiro, Cor.BRANCO, this));
         colocarNovaPeça('a', 2, new Peão(tabuleiro, Cor.BRANCO, this));
-        colocarNovaPeça('b', 2, new Peão(tabuleiro, Cor.BRANCO, this));
+        colocarNovaPeça('b', 7, new Peão(tabuleiro, Cor.BRANCO, this));
         colocarNovaPeça('c', 2, new Peão(tabuleiro, Cor.BRANCO, this));
         colocarNovaPeça('d', 2, new Peão(tabuleiro, Cor.BRANCO, this));
         colocarNovaPeça('e', 2, new Peão(tabuleiro, Cor.BRANCO, this));
@@ -321,6 +349,10 @@ public class PartidaXadrez {
 
     public PeçaXadrez getEnPassantVulnerável() {
         return enPassantVulnerável;
+    }
+
+    public PeçaXadrez getPromovido() {
+        return promovido;
     }
     
 }
