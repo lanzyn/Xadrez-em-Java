@@ -3,12 +3,16 @@ package CamadaXadrez.PeçasDoXadrez;
 import CamadaTabuleiro.PosiçãoTabuleiro;
 import CamadaTabuleiro.Tabuleiro;
 import CamadaXadrez.Cor;
+import CamadaXadrez.PartidaXadrez;
 import CamadaXadrez.PeçaXadrez;
 
 public class Peão extends PeçaXadrez {
+
+    private PartidaXadrez partida;
         
-    public Peão(Tabuleiro tabuleiro, Cor cor) {
+    public Peão(Tabuleiro tabuleiro, Cor cor, PartidaXadrez partida) {
         super(tabuleiro, cor);
+        this.partida = partida;
     }
 
     @Override
@@ -37,6 +41,17 @@ public class Peão extends PeçaXadrez {
             if(getTabuleiro().existePosição(p) && existePeçaOponente(p)){
                 matriz[p.getLinha()][p.getColuna()] = true;
             }
+            //En Passant
+            if(posição.getLinha() == 3){
+                PosiçãoTabuleiro esquerda = new PosiçãoTabuleiro(posição.getLinha(), posição.getColuna() - 1);
+                if(getTabuleiro().existePosição(esquerda) && existePeçaOponente(esquerda) && getTabuleiro().peça(esquerda) == partida.getEnPassantVulnerável()){
+                    matriz[esquerda.getLinha() - 1][esquerda.getColuna()] = true;
+                }
+                PosiçãoTabuleiro direita = new PosiçãoTabuleiro(posição.getLinha(), posição.getColuna() + 1);
+                if(getTabuleiro().existePosição(direita) && existePeçaOponente(direita) && getTabuleiro().peça(direita) == partida.getEnPassantVulnerável()){
+                    matriz[direita.getLinha() - 1][direita.getColuna()] = true;
+                }
+            }
         }else{
             //Peão preto
             p.definirValores(posição.getLinha() + 1, posição.getColuna());
@@ -56,6 +71,17 @@ public class Peão extends PeçaXadrez {
             p.definirValores(posição.getLinha() + 1, posição.getColuna() + 1);
             if(getTabuleiro().existePosição(p) && existePeçaOponente(p)){
                 matriz[p.getLinha()][p.getColuna()] = true;
+            }
+            //En Passant
+            if(posição.getLinha() == 4){
+                PosiçãoTabuleiro esquerda = new PosiçãoTabuleiro(posição.getLinha(), posição.getColuna() - 1);
+                if(getTabuleiro().existePosição(esquerda) && existePeçaOponente(esquerda) && getTabuleiro().peça(esquerda) == partida.getEnPassantVulnerável()){
+                    matriz[esquerda.getLinha() + 1][esquerda.getColuna()] = true;
+                }
+                PosiçãoTabuleiro direita = new PosiçãoTabuleiro(posição.getLinha(), posição.getColuna() + 1);
+                if(getTabuleiro().existePosição(direita) && existePeçaOponente(direita) && getTabuleiro().peça(direita) == partida.getEnPassantVulnerável()){
+                    matriz[direita.getLinha() + 1][direita.getColuna()] = true;
+                }
             }
         }
         return matriz;

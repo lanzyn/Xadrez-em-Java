@@ -13,6 +13,7 @@ public class PartidaXadrez {
     private Tabuleiro tabuleiro;
     private boolean xeque;
     private boolean xequeMate;
+    private PeçaXadrez enPassantVulnerável;
 
     private ArrayList<Peça> peçasNoTabuleiro = new ArrayList<Peça>();
     private ArrayList<Peça> peçasCapturadas = new ArrayList<Peça>();
@@ -23,14 +24,6 @@ public class PartidaXadrez {
         turno = 1;
         jogadorAtual = Cor.BRANCO;
         iniciarTabuleiro();
-    }
-
-    public ArrayList<Peça> getPeçasNoTabuleiro() {
-        return peçasNoTabuleiro;
-    }
-
-    public ArrayList<Peça> getPeçasCapturadas() {
-        return peçasCapturadas;
     }
 
     public PeçaXadrez[][] getPecas(){
@@ -59,6 +52,7 @@ public class PartidaXadrez {
             desfazerMovimento(origemTabuleiro, destinoTabuleiro, peçaCapturada);
             throw new ExceçãoXadrez("Você não pode se colocar em xeque");
         }
+        PeçaXadrez peçaMovida = (PeçaXadrez)tabuleiro.peça(destinoTabuleiro);
         xeque = (testeXeque(oponente(jogadorAtual))) ? true : false;
         if(testeXequeMate(oponente(jogadorAtual))){
             xequeMate = true;
@@ -66,6 +60,13 @@ public class PartidaXadrez {
         else{
             próximoTurno();
         }
+        if(peçaMovida instanceof Peão && (destinoTabuleiro.getLinha() == origemTabuleiro.getLinha() - 2 || destinoTabuleiro.getLinha() == origemTabuleiro.getLinha() + 2)){
+            enPassantVulnerável = peçaMovida;
+        }
+        else{
+            enPassantVulnerável = null;
+        }
+
         return (PeçaXadrez)peçaCapturada;
     }
 
@@ -78,7 +79,7 @@ public class PartidaXadrez {
             peçasCapturadas.add(peçaCapturada);
             peçasNoTabuleiro.remove(peçaCapturada);
         }
-
+        //Roque pequeno
         if(peçaMovida instanceof Rei && destino.getColuna() == origem.getColuna() + 2 && peçaMovida.getCor() == Cor.BRANCO){
             PosiçãoTabuleiro origemT = new PosiçãoTabuleiro(origem.getLinha(), origem.getColuna() + 3);
             PosiçãoTabuleiro destinoT = new PosiçãoTabuleiro(origem.getLinha(), origem.getColuna() + 1);
@@ -93,7 +94,7 @@ public class PartidaXadrez {
             tabuleiro.colocarPeça(torre, destinoT);
             torre.incrementarContadorMovimentos();
         }
-
+        //Roque grande
         if(peçaMovida instanceof Rei && destino.getColuna() == origem.getColuna() - 2 && peçaMovida.getCor() == Cor.BRANCO){
             PosiçãoTabuleiro origemT = new PosiçãoTabuleiro(origem.getLinha(), origem.getColuna() - 4);
             PosiçãoTabuleiro destinoT = new PosiçãoTabuleiro(origem.getLinha(), origem.getColuna() - 1);
@@ -107,6 +108,21 @@ public class PartidaXadrez {
             PeçaXadrez torre = (PeçaXadrez)tabuleiro.removerPeça(origemT);
             tabuleiro.colocarPeça(torre, destinoT);
             torre.incrementarContadorMovimentos();
+        }
+        //En passant
+        if(peçaMovida instanceof Peão){
+            if(origem.getColuna() != destino.getColuna() && peçaCapturada == null){
+                PosiçãoTabuleiro peãoPosição;
+                if(peçaMovida.getCor() == Cor.BRANCO){
+                    peãoPosição = new PosiçãoTabuleiro(destino.getLinha() + 1, destino.getColuna());
+                }
+                else{
+                    peãoPosição = new PosiçãoTabuleiro(destino.getLinha() - 1, destino.getColuna());
+                }
+                peçaCapturada = tabuleiro.removerPeça(peãoPosição);
+                peçasCapturadas.add(peçaCapturada);
+                peçasNoTabuleiro.remove(peçaCapturada);
+            }
         }
 
         return peçaCapturada;
@@ -121,7 +137,7 @@ public class PartidaXadrez {
             peçasCapturadas.remove(peçaCapturada);
             peçasNoTabuleiro.add(peçaCapturada);
         }
-
+        //Roque pequeno
         if(peçaMovida instanceof Rei && destino.getColuna() == origem.getColuna() + 2 && peçaMovida.getCor() == Cor.BRANCO){
             PosiçãoTabuleiro origemT = new PosiçãoTabuleiro(origem.getLinha(), origem.getColuna() + 3);
             PosiçãoTabuleiro destinoT = new PosiçãoTabuleiro(origem.getLinha(), origem.getColuna() + 1);
@@ -136,7 +152,7 @@ public class PartidaXadrez {
             tabuleiro.colocarPeça(torre, origemT);
             torre.decrementarContadorMovimentos();
         }
-
+        //Roque grande
         if(peçaMovida instanceof Rei && destino.getColuna() == origem.getColuna() - 2 && peçaMovida.getCor() == Cor.BRANCO){
             PosiçãoTabuleiro origemT = new PosiçãoTabuleiro(origem.getLinha(), origem.getColuna() - 4);
             PosiçãoTabuleiro destinoT = new PosiçãoTabuleiro(origem.getLinha(), origem.getColuna() - 1);
@@ -151,6 +167,21 @@ public class PartidaXadrez {
             tabuleiro.colocarPeça(torre, origemT);
             torre.decrementarContadorMovimentos();
         }
+        //En passant
+        if(peçaMovida instanceof Peão){
+            if(origem.getColuna() != destino.getColuna() && peçaCapturada == enPassantVulnerável){
+                PeçaXadrez peão = (PeçaXadrez)tabuleiro.removerPeça(destino);
+                PosiçãoTabuleiro peãoPosição;
+                if(peçaMovida.getCor() == Cor.BRANCO){
+                    peãoPosição = new PosiçãoTabuleiro(3, destino.getColuna());
+                }
+                else{
+                    peãoPosição = new PosiçãoTabuleiro(4, destino.getColuna());
+                }
+                tabuleiro.colocarPeça(peão, peãoPosição);
+            }
+        }
+
     }
 
     public void validarPosiçãoOrigem(PosiçãoTabuleiro posição){
@@ -228,14 +259,14 @@ public class PartidaXadrez {
         colocarNovaPeça('a', 8, new Torre(tabuleiro, Cor.PRETO));
         colocarNovaPeça('h', 8, new Torre(tabuleiro, Cor.PRETO));
         colocarNovaPeça('d', 8, new Rei(tabuleiro, Cor.PRETO, this));
-        colocarNovaPeça('a', 7, new Peão(tabuleiro, Cor.PRETO));
-        colocarNovaPeça('b', 7, new Peão(tabuleiro, Cor.PRETO));
-        colocarNovaPeça('c', 7, new Peão(tabuleiro, Cor.PRETO));
-        colocarNovaPeça('d', 7, new Peão(tabuleiro, Cor.PRETO));
-        colocarNovaPeça('e', 7, new Peão(tabuleiro, Cor.PRETO));
-        colocarNovaPeça('f', 7, new Peão(tabuleiro, Cor.PRETO));
-        colocarNovaPeça('g', 7, new Peão(tabuleiro, Cor.PRETO));
-        colocarNovaPeça('h', 7, new Peão(tabuleiro, Cor.PRETO));
+        colocarNovaPeça('a', 7, new Peão(tabuleiro, Cor.PRETO, this));
+        colocarNovaPeça('b', 7, new Peão(tabuleiro, Cor.PRETO, this));
+        colocarNovaPeça('c', 7, new Peão(tabuleiro, Cor.PRETO, this));
+        colocarNovaPeça('d', 7, new Peão(tabuleiro, Cor.PRETO, this));
+        colocarNovaPeça('e', 7, new Peão(tabuleiro, Cor.PRETO, this));
+        colocarNovaPeça('f', 7, new Peão(tabuleiro, Cor.PRETO, this));
+        colocarNovaPeça('g', 7, new Peão(tabuleiro, Cor.PRETO, this));
+        colocarNovaPeça('h', 7, new Peão(tabuleiro, Cor.PRETO, this));
         colocarNovaPeça('c', 8, new Bispo(tabuleiro, Cor.PRETO));
         colocarNovaPeça('f', 8, new Bispo(tabuleiro, Cor.PRETO));
         colocarNovaPeça('e', 8, new Rainha(tabuleiro, Cor.PRETO));
@@ -247,17 +278,17 @@ public class PartidaXadrez {
         colocarNovaPeça('g', 1, new Cavalo(tabuleiro, Cor.BRANCO));  
         colocarNovaPeça('c', 1, new Bispo(tabuleiro, Cor.BRANCO));
         colocarNovaPeça('f', 1, new Bispo(tabuleiro, Cor.BRANCO));
-        colocarNovaPeça('e', 1, new Rei(tabuleiro, Cor.BRANCO, this));
         colocarNovaPeça('a', 1, new Torre(tabuleiro, Cor.BRANCO));
         colocarNovaPeça('h', 1, new Torre(tabuleiro, Cor.BRANCO));
-        colocarNovaPeça('a', 2, new Peão(tabuleiro, Cor.BRANCO));
-        colocarNovaPeça('b', 2, new Peão(tabuleiro, Cor.BRANCO));
-        colocarNovaPeça('c', 2, new Peão(tabuleiro, Cor.BRANCO));
-        colocarNovaPeça('d', 2, new Peão(tabuleiro, Cor.BRANCO));
-        colocarNovaPeça('e', 2, new Peão(tabuleiro, Cor.BRANCO));
-        colocarNovaPeça('f', 2, new Peão(tabuleiro, Cor.BRANCO));
-        colocarNovaPeça('g', 2, new Peão(tabuleiro, Cor.BRANCO));
-        colocarNovaPeça('h', 2, new Peão(tabuleiro, Cor.BRANCO));
+        colocarNovaPeça('e', 1, new Rei(tabuleiro, Cor.BRANCO, this));
+        colocarNovaPeça('a', 2, new Peão(tabuleiro, Cor.BRANCO, this));
+        colocarNovaPeça('b', 2, new Peão(tabuleiro, Cor.BRANCO, this));
+        colocarNovaPeça('c', 2, new Peão(tabuleiro, Cor.BRANCO, this));
+        colocarNovaPeça('d', 2, new Peão(tabuleiro, Cor.BRANCO, this));
+        colocarNovaPeça('e', 2, new Peão(tabuleiro, Cor.BRANCO, this));
+        colocarNovaPeça('f', 2, new Peão(tabuleiro, Cor.BRANCO, this));
+        colocarNovaPeça('g', 2, new Peão(tabuleiro, Cor.BRANCO, this));
+        colocarNovaPeça('h', 2, new Peão(tabuleiro, Cor.BRANCO, this));
     }
 
     public int getTurno() {
@@ -278,6 +309,18 @@ public class PartidaXadrez {
 
     public boolean getXequeMate() {
         return xequeMate;
+    }
+
+    public ArrayList<Peça> getPeçasNoTabuleiro() {
+        return peçasNoTabuleiro;
+    }
+
+    public ArrayList<Peça> getPeçasCapturadas() {
+        return peçasCapturadas;
+    }
+
+    public PeçaXadrez getEnPassantVulnerável() {
+        return enPassantVulnerável;
     }
     
 }

@@ -121,9 +121,6 @@ public class Rei extends PeçaXadrez {
                 }
             }
         }
-
-
-
         return matriz;
     }
 
