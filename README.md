@@ -12,12 +12,6 @@ Este é um projeto de um jogo de xadrez implementado em Java. O jogo suporta doi
 2. Abra o projeto na sua IDE.
 3. Execute a classe principal para iniciar o jogo.
 
-## ♚ Estrutura do projeto
-O projeto segue a estrutura padrão de um projeto Java:
-
-- `src/main/java`: Contém o código fonte do projeto.
-- `src/test/java`: Contém os testes unitários.
-
 ## ♟ Contribuição
 Sinta-se à vontade para contribuir com este projeto. Todas as contribuições são bem-vindas, desde que sigam as diretrizes de contribuição.
 
