@@ -148,7 +148,7 @@ public class UI {
     public static PosiçãoXadrez lerPosiçãoXadrez(Scanner sc) {
         try {
             String s = sc.nextLine();
-            char coluna = s.charAt(0);
+            char coluna = Character.toLowerCase(s.charAt(0));
             int linha = Integer.parseInt(s.substring(1));
             return new PosiçãoXadrez(coluna, linha);
         } catch (RuntimeException e) {

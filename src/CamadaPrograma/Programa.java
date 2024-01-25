@@ -1,13 +1,11 @@
 package CamadaPrograma;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import CamadaXadrez.ExceçãoXadrez;
 import CamadaXadrez.PartidaXadrez;
-import CamadaXadrez.PeçaXadrez;
 import CamadaXadrez.PosiçãoXadrez;
 
 public class Programa {
@@ -33,7 +31,7 @@ public class Programa {
 
                 if (partida.getPromovido() != null) {
                     System.out.print("Digite a peça para promoção (B/C/R/Q): ");
-                    String tipo = sc.nextLine();
+                    String tipo = sc.nextLine().toUpperCase();
                     if (!tipo.equals("B") && !tipo.equals("C") && !tipo.equals("R") && !tipo.equals("Q")) {
                         throw new InvalidParameterException("Tipo inválido para promoção");
                     }
